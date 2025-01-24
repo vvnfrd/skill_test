@@ -10,15 +10,15 @@ class User(AbstractUser):
 
     username = None
     email = models.EmailField(unique=True, verbose_name='почта')
-    first_name = models.CharField(max_length=35, verbose_name='имя')
-    last_name = models.CharField(max_length=50, verbose_name='фамилия')
-    job_title = models.CharField(max_length=100, verbose_name='должность')
+    first_name = models.CharField(max_length=35, verbose_name='имя', **NULLABLE)
+    last_name = models.CharField(max_length=50, verbose_name='фамилия', **NULLABLE)
+    job_title = models.CharField(max_length=100, verbose_name='должность', **NULLABLE)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return f'{self.first_name} {self.email}'
+        return f'{self.email}'
 
     class Meta:
         verbose_name = 'работник'

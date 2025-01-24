@@ -7,9 +7,9 @@ class Command(BaseCommand):
     """Команда создания суперпользователя"""
 
     def handle(self, *args, **options):
-
         email = str(input('Почта: '))
-
+        first_name = str(input('Имя: '))
+        last_name = str(input('Фамилия: '))
         while True:
             password1 = str(input('Пароль: '))
             password2 = str(input('Подтвердите пароль: '))
@@ -21,11 +21,14 @@ class Command(BaseCommand):
 
         user = User.objects.create(
             email=email,
+            first_name=first_name,
+            last_name=last_name,
+            job_title='пользователь',
             is_staff=True,
-            is_superuser=True,
+            is_superuser=False,
             is_active=True
         )
 
         user.set_password(password)
         user.save()
-        print('\nПрофиль администратора создан.\n')
+        print('\nПрофиль пользователя создан.\n')
