@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework import generics
+from rest_framework.filters import SearchFilter
 from web.models import Product, Supplier
 from web.serializers import ProductSerializer, SupplierSerializer
 
@@ -16,6 +17,8 @@ class SupplierCreateAPIView(generics.CreateAPIView):
 class SupplierListAPIView(generics.ListAPIView):
     serializer_class = SupplierSerializer
     queryset = Supplier.objects.all()
+    filter_backends = [SearchFilter]
+    search_fields = ['city']
 
 
 class SupplierRetrieveAPIView(generics.RetrieveAPIView):
