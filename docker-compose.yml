@@ -1,0 +1,37 @@
+services:
+
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    expose:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "-c", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+    restart: on-failure
+
+  web:
+    build: .
+    tty: true
+    ports:
+      - "8000:8000"
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db
+      - TIME_ZONE=${DB_PASSWORD}
+    volumes:
+      - .:/web
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+
+volumes:
+  pg_data:
