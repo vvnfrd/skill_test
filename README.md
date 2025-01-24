@@ -43,7 +43,10 @@
 
 Примечания
 -
+Помимо условий, выполнил тесты для приложения web и оформил docker-compose
+
 Перечень содержимого .env находится в dotenv-context.txt
 
 Для быстрого запуска docker-compose используйте команду: docker compose up -d --build
+
 После чего, подключившись к web, создайте суперюзера коммандой: python manage.py create_superuser
