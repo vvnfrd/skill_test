@@ -8,17 +8,23 @@ from web.serializers import ProductSerializer, SupplierSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
+    """ ViewSet продукта """
+
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
     permission_classes = [IsActiveAuthenticated]
 
 
 class SupplierCreateAPIView(generics.CreateAPIView):
+    """ APIView создания поставщиков """
+
     serializer_class = SupplierSerializer
     permission_classes = [IsActiveAuthenticated]
 
 
 class SupplierListAPIView(generics.ListAPIView):
+    """ APIView вывода списка поставщиков """
+
     serializer_class = SupplierSerializer
     queryset = Supplier.objects.all()
     filter_backends = [SearchFilter]
@@ -28,18 +34,24 @@ class SupplierListAPIView(generics.ListAPIView):
 
 
 class SupplierRetrieveAPIView(generics.RetrieveAPIView):
+    """ APIView подробной информации поставщиков """
+
     serializer_class = SupplierSerializer
     queryset = Supplier.objects.all()
     permission_classes = [IsActiveAuthenticated]
 
 
 class SupplierUpdateAPIView(generics.UpdateAPIView):
+    """ APIView обновления поставщиков """
+
     serializer_class = SupplierSerializer
     queryset = Supplier.objects.all()
     permission_classes = [IsActiveAuthenticated]
 
 
 class SupplierDestroyAPIView(generics.DestroyAPIView):
+    """ APIView удаления поставщиков """
+
     serializer_class = SupplierSerializer
     queryset = Supplier.objects.all()
     permission_classes = [IsActiveAuthenticated]

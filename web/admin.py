@@ -6,6 +6,8 @@ from web.models import Supplier, Product
 
 @admin.register(Supplier)
 class SupplierAdmin(admin.ModelAdmin):
+    """ Панель управления поставщиками """
+
     list_display = ('name', 'level', 'email', 'country', 'city',
                     'street', 'house', 'supplier_of_link',
                     'debt', 'created_at',)
@@ -25,13 +27,15 @@ class SupplierAdmin(admin.ModelAdmin):
 
     supplier_of_link.short_description = 'Поставщик'
 
-
     def clear_debt(self, request, queryset):
         queryset.update(debt=0)
         self.message_user(request, "Задолженность перед поставщиком была обнулена")
     clear_debt.short_description = "Обнулить задолженность"
 
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    """ Панель управления продуктами """
+
     list_display = ('name', 'model', 'created_at',)
     search_fields = ('name', 'model', 'created_at',)

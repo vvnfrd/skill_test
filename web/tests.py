@@ -1,9 +1,11 @@
 from rest_framework.test import APITestCase
 from rest_framework import status
-
 from users.models import User
 
+
 def create_supplier(client):
+    """ Функция создания поставщика. Часто будет использоваться в тестах """
+
     data = {
         'name': 'testname',
         'level': 0,
@@ -21,14 +23,18 @@ def create_supplier(client):
 
     return {'response': response, 'data': data}
 
+
 def create_product(client):
+    """ Функция создания продукта. Часто будет использоваться в тестах """
 
     data = {'name': 'testname', 'model': 'testmodel'}
     response = client.post('/products/', data=data)
 
     return {'response': response, 'data': data}
 
+
 class SupplierTestCase(APITestCase):
+    """ Тесты для APIView поставщика """
 
     def setUp(self) -> None:
         user = User.objects.create(
@@ -40,9 +46,8 @@ class SupplierTestCase(APITestCase):
         )
         self.client.force_authenticate(user)
 
-
     def test_create_supplier(self):
-
+        """ Тест CreateAPIView поставщика """
 
         created_suppler = create_supplier(self.client)
         response = created_suppler['response']
@@ -58,6 +63,8 @@ class SupplierTestCase(APITestCase):
         self.assertEqual(result, data)
 
     def test_list_supplier(self):
+        """ Тест ListAPIView поставщика """
+
         response = self.client.get(
             '/supplier/'
         )
@@ -67,6 +74,7 @@ class SupplierTestCase(APITestCase):
         self.assertEqual(result, [])
 
     def test_retrieve_supplier(self):
+        """ Тест RetrieveAPIView поставщика """
 
         created_suppler = create_supplier(self.client)
         result = created_suppler['response'].json()
@@ -86,6 +94,7 @@ class SupplierTestCase(APITestCase):
         self.assertEqual(result, data)
 
     def test_update_supplier(self):
+        """ Тест UpdateAPIView поставщика """
 
         created_suppler = create_supplier(self.client)
         response_post = created_suppler['response']
@@ -116,6 +125,7 @@ class SupplierTestCase(APITestCase):
                          ['Нельзя обновлять параметр задолженности перед поставщиком'])
 
     def test_destroy_supplier(self):
+        """ Тест DestroyAPIView поставщика """
 
         created_suppler = create_supplier(self.client)
         response_post = created_suppler['response']
@@ -127,6 +137,7 @@ class SupplierTestCase(APITestCase):
 
 
 class ProductTestCase(APITestCase):
+    """ Тесты для APIView продукта """
 
     def setUp(self) -> None:
         user = User.objects.create(
@@ -139,6 +150,7 @@ class ProductTestCase(APITestCase):
         self.client.force_authenticate(user)
 
     def test_create_product(self):
+        """ Тест CreateAPIView продукта """
 
         created_product = create_product(self.client)
         response = created_product['response']
@@ -152,6 +164,8 @@ class ProductTestCase(APITestCase):
         self.assertEqual(result, data)
 
     def test_list_product(self):
+        """ Тест ListAPIView продукта """
+
         response = self.client.get(
             '/products/'
         )
@@ -161,6 +175,7 @@ class ProductTestCase(APITestCase):
         self.assertEqual(result, [])
 
     def test_retrieve_product(self):
+        """ Тест RetrieveAPIView продукта """
 
         created_product = create_product(self.client)
         result = created_product['response'].json()
@@ -178,6 +193,7 @@ class ProductTestCase(APITestCase):
         self.assertEqual(result, data)
 
     def test_update_product(self):
+        """ Тест UpdateAPIView продукта """
 
         created_product = create_product(self.client)
         response_post = created_product['response']
@@ -198,6 +214,7 @@ class ProductTestCase(APITestCase):
         self.assertEqual(result, supplier_data)
 
     def test_destroy_product(self):
+        """ Тест DestroyAPIView продукта """
 
         created_product = create_product(self.client)
         response_post = created_product['response']

@@ -1,6 +1,6 @@
 from web.apps import WebConfig
 from rest_framework.routers import DefaultRouter
-from django.urls import path, include
+from django.urls import path
 
 from web.views import ProductViewSet, SupplierCreateAPIView, SupplierListAPIView, SupplierRetrieveAPIView, \
     SupplierUpdateAPIView, SupplierDestroyAPIView

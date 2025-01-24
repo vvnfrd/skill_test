@@ -4,6 +4,8 @@ from users.models import NULLABLE
 
 
 class Product(models.Model):
+    """ Модель продукта """
+
     name = models.CharField(max_length=255, verbose_name='название')
     model = models.CharField(max_length=100, verbose_name='модель')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='время создания')
@@ -17,6 +19,8 @@ class Product(models.Model):
 
 
 class Supplier(models.Model):
+    """ Модель поставщика """
+
     LEVELS = [
         (0, 'Завод'),
         (1, 'Розничная сеть'),
@@ -32,16 +36,17 @@ class Supplier(models.Model):
     house = models.CharField(max_length=10, verbose_name='дом')
     products = models.ManyToManyField(Product, verbose_name='продукты')
     supplier_of = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True,
-                                        verbose_name='поставщик')
+                                    verbose_name='поставщик')
     debt = models.DecimalField(max_digits=10, decimal_places=2, default=0.00,
-                                           verbose_name='задолженность поставщику')
+                               verbose_name='задолженность поставщику')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='время создания')
 
     def __str__(self):
         return self.name
 
-
     def get_level(self):
+        """ Установка уровня в зависимости от поставщика """
+
         supplier = self.supplier_of
         if not supplier.supplier_of.exists():
             return dict(self.LEVELS).get(0, 'Неизвестно')
@@ -51,6 +56,7 @@ class Supplier(models.Model):
             return dict(self.LEVELS).get(2, 'Неизвестно')
 
     def save(self, *args, **kwargs):
+
         supplier = self.supplier_of
         if supplier is None:
             self.level = 0
@@ -59,7 +65,6 @@ class Supplier(models.Model):
         elif supplier.level == 1 or supplier.level == 2:
             self.level = 2
         super(Supplier, self).save(*args, **kwargs)
-
 
     class Meta:
         verbose_name = 'Поставщик'

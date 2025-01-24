@@ -1,0 +1,5 @@
+DB_NAME="skill_test" - Обязательно, название БД
+DB_USER="postgres" - Обязательно, название пользователя БД
+DB_PASSWORD="13799731" - Обязательно, пароль пользователя БД
+TIME_ZONE="Asia/Novosibirsk" - Необязательно
+LANGUAGE_CODE="ru-ru" - Необязательно
