@@ -30,7 +30,7 @@ class Supplier(models.Model):
     city = models.CharField(max_length=100, verbose_name='город')
     street = models.CharField(max_length=255, verbose_name='улица')
     house = models.CharField(max_length=10, verbose_name='дом')
-    products = models.ManyToManyField(Product, verbose_name='продукты', **NULLABLE)
+    products = models.ManyToManyField(Product, verbose_name='продукты')
     supplier_of = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True,
                                         verbose_name='поставщик')
     debt = models.DecimalField(max_digits=10, decimal_places=2, default=0.00,

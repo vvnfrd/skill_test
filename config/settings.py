@@ -12,12 +12,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
-
+from dotenv.main import load_dotenv
 import pytz
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-from dotenv.main import load_dotenv
 
 load_dotenv(BASE_DIR / '.env')
 
@@ -98,12 +97,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'PORT': 5432,
-        'HOST': os.getenv('DB_HOST'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
     }
 }
 
@@ -128,9 +127,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', 'en-us')
 
-TIME_ZONE = os.getenv('TIME_ZONE')
+TIME_ZONE = os.getenv('TIME_ZONE', 'UTC')
 
 local_tz = pytz.timezone(TIME_ZONE)
 
