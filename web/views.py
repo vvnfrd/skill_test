@@ -3,6 +3,7 @@ from rest_framework import generics
 from rest_framework.filters import SearchFilter
 from users.permissions import IsActiveAuthenticated
 from web.models import Product, Supplier
+from web.paginators import SupplierPaginator
 from web.serializers import ProductSerializer, SupplierSerializer
 
 
@@ -23,6 +24,7 @@ class SupplierListAPIView(generics.ListAPIView):
     filter_backends = [SearchFilter]
     search_fields = ['city']
     permission_classes = [IsActiveAuthenticated]
+    pagination_class = SupplierPaginator
 
 
 class SupplierRetrieveAPIView(generics.RetrieveAPIView):
